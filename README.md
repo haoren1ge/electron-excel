@@ -1,2 +1,0 @@
-# electron-eccel
-electron-vue 
