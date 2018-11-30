@@ -15,7 +15,11 @@ export default {
   name: "sumlist",
   data(){
       return{
-          columns:[ {
+          columns:[ 
+                    {
+                        title: '序号',
+                        key: 'id'
+                    },{
                         title: '姓名',
                         key: 'name'
                     },
@@ -39,8 +43,12 @@ export default {
                     }
                     ,
                     {
-                        title: '周末加班时间',
-                        key: 'offday'
+                        title: '周六加班时间',
+                        key: 'sday'
+                    },
+                    {
+                        title: '周日加班时间',
+                        key: 'sunday'
                     },
                     {
                         title: '汇总时间',

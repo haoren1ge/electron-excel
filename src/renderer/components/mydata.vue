@@ -37,11 +37,12 @@ export default {
         return Math.round((all+half)*100)/100;
         },
     isoffday(day) {
-      if (new Date(day).getDay != 0 && new Date(day).getDay != 6) {
-        return false;
-      } else {
-        return true;
-      }
+      //  if (new Date(day).getDay() != 0 && new Date(day).getDay() != 6) {
+      //   return false;
+      // } else {
+      //   return true;
+      // }
+      return new Date(day).getDay()
     },
     getfiledata() {
       this.columns = [];
@@ -66,7 +67,8 @@ export default {
             dep: "",
             wday: 0,
             wwday: 0,
-            offday: 0
+            sday: 0,
+            sunday:0
           };
           let arrs = [];
           for (
@@ -122,11 +124,26 @@ export default {
                         start=new Date(arrs[0]).getTime()
                     }
                     minutes=parseInt((end-start) / 1000 / 60)
-                    if (this.isoffday(this.$store.state.data[i][index - 1])) {
+
+                    if (this.isoffday(this.$store.state.data[i][index - 1])==6) {
                         if (minutes>275) {
                             minutes-=60
                         }
-                        chres.offday=this.gethours(minutes)
+                        if (minutes>500) {
+                          minutes-=20
+                        }
+                        chres.sday=this.gethours(minutes)
+                        
+                    }
+
+                     else if (this.isoffday(this.$store.state.data[i][index - 1])==0) {
+                        if (minutes>275) {
+                            minutes-=60
+                        }
+                        if (minutes>500) {
+                          minutes-=20
+                        }
+                        chres.sunday=this.gethours(minutes)
                         
                     }else{
                      if (minutes>275) {
@@ -134,10 +151,15 @@ export default {
                     }else{
                       chres.wday= this.gethours(minutes)
                     }
-                    if (minutes>480) {
+                    if (minutes>480 && minutes<=500) {
                         chres.wday= this.gethours(480)
-                        chres.wwday=this.gethours(minutes-480)
-                    }else{
+                        chres.wwday=0
+                    }
+                    else if(minutes>500){
+                        chres.wday= this.gethours(480)
+                        chres.wwday=this.gethours(minutes-500)
+                    }
+                    else{
                       chres.wday= this.gethours(minutes)
                     }
 
@@ -162,13 +184,15 @@ export default {
       this.$store.commit('getkeylist',this.keydata)
 
       let sdata=[]
-     
+      let ind=1
        this.$store.state.keylist.forEach(i => {
           let data={
+              id:ind,
               code:i,
               wday:0,
               wwday:0,
-              offday:0,
+              sday:0,
+              sunday:0,
               allday:0
           }
           this.$store.state.datalist.forEach(item=>{
@@ -177,11 +201,13 @@ export default {
                   data.dep=item.dep
                   data.wday=Math.round((data.wday+item.wday)*100)/100;
                   data.wwday=Math.round((data.wwday+item.wwday)*100)/100;
-                  data.offday=Math.round((data.offday+item.offday)*100)/100;
-                  data.allday=Math.round((data.wday+data.wwday+data.offday)*100)/100;
+                  data.sday=Math.round((data.sday+item.sday)*100)/100;
+                  data.sunday=Math.round((data.sunday+item.sunday)*100)/100;
+                  data.allday=Math.round((data.wday+data.wwday+data.sday+data.sunday)*100)/100;
               }
           })
           sdata.push(data)
+          ind++
          
       });
        this.$store.commit('getsumlist',sdata)
@@ -190,16 +216,18 @@ export default {
            data1:[],
            data2:[],
            data3:[],
-           data4:[]
+           data4:[],
+           data5:[]
        }
-      exdata.push([ '工号','姓名','班组','正常工作时间','日常加班时间','周末加班时间','汇总时间'])
+      exdata.push([ '序号','工号','姓名','班组','正常工作时间','日常加班时间','周六加班时间','周日加班时间','汇总时间'])
       sdata.forEach(i=>{
           chdata.data1.push(i.name+"("+i.code+")")
            chdata.data2.push(i.wday)
             chdata.data3.push(i.wwday)
-             chdata.data4.push(i.offday)
+             chdata.data4.push(i.sday)
+             chdata.data5.push(i.sunday)
 
-          exdata.push([i.code,i.name,i.dep,i.wday,i.wwday,i.offday,i.allday])
+          exdata.push([i.id,i.code,i.name,i.dep,i.wday,i.wwday,i.sday,i.sunday,i.allday])
       })
      this.$store.commit('getex',exdata)
      this.$store.commit('getchdata',chdata)

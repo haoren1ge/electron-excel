@@ -35,7 +35,7 @@ export default {
           }
         },
         legend: {
-          data: ["正常工作时间", "日常加班时间", "周末加班时间"]
+          data: ["正常工作时间", "日常加班时间", "周六加班时间","周日加班时间"]
         },
         grid: {
           left: "3%",
@@ -86,7 +86,7 @@ export default {
             data: this.$store.state.chdata.data3
           },
           {
-            name: "周末加班时间",
+            name: "周六加班时间",
             type: "bar",
             stack: "1",
             label: {
@@ -101,6 +101,24 @@ export default {
               }
             },
             data:this.$store.state.chdata.data4
+          }
+          ,
+          {
+            name: "周日加班时间",
+            type: "bar",
+            stack: "1",
+            label: {
+              normal: {
+                show: true,
+                position: "insideRight"
+              }
+            },
+             itemStyle: {
+              normal: {
+                color: "#ed4014"
+              }
+            },
+            data:this.$store.state.chdata.data5
           }
         ]
       });
