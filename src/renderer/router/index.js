@@ -5,6 +5,8 @@ import LandingPage from '../components/LandingPage'
 import mydata1 from '../components/mydata'
 import datalist from '../components/datalist'
 import sumlist from '../components/sumlist'
+import chlist from '../components/chlist'
+
 Vue.use(Router)
 
 export default new Router({
@@ -29,6 +31,11 @@ export default new Router({
       path: '/sumlist',
       name: 'sumlist',
       component: sumlist
+    },
+    {
+      path: '/chlist',
+      name: 'chlist',
+      component: chlist
     },
     {
       path: '*',

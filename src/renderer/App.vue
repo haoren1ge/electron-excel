@@ -30,27 +30,35 @@
             <Icon type="md-paper" />
             <router-link to="/sumlist">汇总列表</router-link>
         </MenuItem>
+
         </MenuItem>
-          <MenuItem name="6"  @click.native="savefile" v-if="this.$store.state.sumlist.length">
+          <MenuItem name="6" v-if="this.$store.state.chdata">
+            <Icon type="md-podium" />
+            <router-link to="/chlist">数据图表</router-link>
+        </MenuItem>
+
+
+        </MenuItem>
+          <MenuItem name="7"  @click.native="savefile" v-if="this.$store.state.sumlist.length">
             <Icon type="md-paper" />
             导出数据
         </MenuItem>
         </MenuItem>
-          <MenuItem name="7" @click.native="full">
+          <MenuItem name="8" @click.native="full">
             <Icon type="md-qr-scanner" />
             全屏/恢复
         </MenuItem>
           </MenuItem>
-          <MenuItem name="8" @click.native="min">
+          <MenuItem name="9" @click.native="min">
             <Icon type="md-remove" />
             最小化
         </MenuItem>
-        <MenuItem name="9" @click.native="about">
+        <MenuItem name="10" @click.native="about">
             <Icon type="md-help" />
             关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于
         </MenuItem>
         
-        <MenuItem name="10" @click.native="exit">
+        <MenuItem name="11" @click.native="exit">
             <Icon type="md-close" />
             退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出
         </MenuItem>

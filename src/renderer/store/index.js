@@ -10,7 +10,8 @@ export default new vuex.Store({
         datalist:[],
         sumlist:[],
         data:[],
-        exdata:[]
+        exdata:[],
+        chdata:{}
     },
     mutations:{
         getdata(state,data){//这里的state对应着上面这个state
@@ -41,6 +42,10 @@ export default new vuex.Store({
         ,
         getex(state,m){//这里的state对应着上面这个state
             state.exdata = m
+        }
+        ,
+        getchdata(state,m){//这里的state对应着上面这个state
+            state.chdata = m
         }
     },
     actions:{

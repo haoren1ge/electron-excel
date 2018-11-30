@@ -186,11 +186,23 @@ export default {
       });
        this.$store.commit('getsumlist',sdata)
        let exdata=[]
+       let chdata={
+           data1:[],
+           data2:[],
+           data3:[],
+           data4:[]
+       }
       exdata.push([ '工号','姓名','班组','正常工作时间','日常加班时间','周末加班时间','汇总时间'])
       sdata.forEach(i=>{
+          chdata.data1.push(i.name+"("+i.code+")")
+           chdata.data2.push(i.wday)
+            chdata.data3.push(i.wwday)
+             chdata.data4.push(i.offday)
+
           exdata.push([i.code,i.name,i.dep,i.wday,i.wwday,i.offday,i.allday])
       })
      this.$store.commit('getex',exdata)
+     this.$store.commit('getchdata',chdata)
     },
 
   },

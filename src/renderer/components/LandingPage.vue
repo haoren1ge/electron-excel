@@ -13,11 +13,13 @@
 
   export default {
     name: 'landing-page',
-     created(){
+     mounted(){
         this.$store.commit('getdata',[])
         this.$store.commit('getdatalist',[])
         this.$store.commit('getsumlist',[])
         this.$store.commit('getkeylist',[])
+         this.$store.commit('getchdata',null)
+          this.$store.commit('getex',[])
     }
   }
 </script>
