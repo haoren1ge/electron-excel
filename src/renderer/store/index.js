@@ -4,6 +4,8 @@ Vue.use(vuex);
 
 export default new vuex.Store({
     state:{
+        timeup:"",
+        timedown:"",
         mindate:"",
         maxdate:"",
         keylist:[],
@@ -46,6 +48,14 @@ export default new vuex.Store({
         ,
         getchdata(state,m){//这里的state对应着上面这个state
             state.chdata = m
+        }
+        ,
+        gettimeup(state,m){//这里的state对应着上面这个state
+            state.timeup = m
+        }
+        ,
+        gettimedown(state,m){//这里的state对应着上面这个state
+            state.timedown = m
         }
     },
     actions:{

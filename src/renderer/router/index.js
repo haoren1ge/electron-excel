@@ -6,6 +6,7 @@ import mydata1 from '../components/mydata'
 import datalist from '../components/datalist'
 import sumlist from '../components/sumlist'
 import chlist from '../components/chlist'
+import setting from '../components/setting'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/chlist',
       name: 'chlist',
       component: chlist
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: setting
     },
     {
       path: '*',

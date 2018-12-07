@@ -3,7 +3,7 @@
     <!-- <div class="layout"> -->
         <Layout>
             
-       <Menu mode="horizontal" theme="light" :active-name="act" :style="{margin:'40px  20px 0 20px'}">
+       <Menu mode="horizontal" theme="light" :style="{margin:'40px  20px 0 20px'}">
         
         <MenuItem name="1" @click.native="openfile" v-if="!this.$store.state.data.length">
             <Icon type="ios-paper" />
@@ -44,21 +44,27 @@
             导出数据
         </MenuItem>
         </MenuItem>
-          <MenuItem name="8" @click.native="full">
+          <MenuItem name="8" >
+            <Icon type="md-paper" />
+            <router-link to="/setting">设&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;置</router-link>
+            
+        </MenuItem>
+        </MenuItem>
+          <MenuItem name="9" @click.native="full">
             <Icon type="md-qr-scanner" />
             全屏/恢复
         </MenuItem>
           </MenuItem>
-          <MenuItem name="9" @click.native="min">
+          <MenuItem name="10" @click.native="min">
             <Icon type="md-remove" />
             最小化
         </MenuItem>
-        <MenuItem name="10" @click.native="about">
+        <MenuItem name="11" @click.native="about">
             <Icon type="md-help" />
             关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;于
         </MenuItem>
         
-        <MenuItem name="11" @click.native="exit">
+        <MenuItem name="12" @click.native="exit">
             <Icon type="md-close" />
             退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出
         </MenuItem>
@@ -67,7 +73,6 @@
             
             <Footer class="layout-footer-center">2018-2019 &copy; 中航电测仪器股份有限公司-汉中分公司</Footer>
         </Layout>
-    <!-- </div> -->
 
  
 
@@ -78,20 +83,30 @@
 <script>
 import xlsx from "node-xlsx";
 import fs from 'fs'
+import path from 'path'
 export default {
   name: "mmain",
   data() {
     return {
-      act:"1"
+       timeup:"",
+       timedown:""
     };
   },
+  mounted(){
+           let da;
+           fs.readFile(path.join(this.$electron.remote.app.getPath('userData'), '/seeting.json'),(err,data)=>{
+           da=JSON.parse(data.toString())
+           this.$store.commit("gettimeup", da.timeup);
+           this.$store.commit("gettimedown", da.timedown);
+        })
+  },
   methods:{
-    about() {
+     about() {
       this.$Modal.info({
         title: "关于本软件",
         content: "基于nodejs、vue和electron开发。"
       });
-      this.act="9"
+    
     },
     full() {
       this.$electron.ipcRenderer.send("full");
@@ -103,7 +118,7 @@ export default {
       this.$electron.ipcRenderer.send("min");
     },
     openfile() {
-      this.act="3"
+     
       let that = this;
       this.$electron.remote.dialog.showOpenDialog(
         {
