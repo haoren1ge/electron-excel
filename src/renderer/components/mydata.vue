@@ -11,7 +11,6 @@
 </template>
 
 <script>
-// import SystemInformation from './LandingPage/SystemInformation'
 
 export default {
   name: "mydata",
@@ -146,7 +145,7 @@ export default {
         new Date(da + " " + timeup) >= new Date(start)
       ) {
         
-        start = new Date(start.getTime());
+        start = new Date(start).getTime();
                if ( new Date(da + " " + timeup) >= new Date(end)) {
              end=new Date(end).getTime();
              res.minutes=parseInt((end - start) / 1000 / 60)
@@ -336,8 +335,8 @@ export default {
                  
                 }
                 if (arrs.length > 1) {
-                  console.log(2)
-                  let hours=0
+                 
+                  let hours
 
                   if (this.isoffday(this.$store.state.data[i][index - 1])==6) {
                       hours= this.checkofdata(arrs[0],arrs[arrs.length-1],this.$store.state.data[i][index - 1])
@@ -347,95 +346,17 @@ export default {
                        hours= this.checkofdata(arrs[0],arrs[arrs.length-1],this.$store.state.data[i][index - 1])
                        chres.sunday=this.gethours(hours.minutes)
                   }else{
-                    console.log(3)
+                    
                    hours= this.checkdata(arrs[0],arrs[arrs.length-1],this.$store.state.data[i][index - 1])
                       chres.wday= this.gethours(hours.minutes)
                       chres.wwday=this.gethours(hours.awork)
                   }
-
-                  //  else if (this.isoffday(this.$store.state.data[i][index - 1])==0) {
-                  //     if (minutes>275) {
-                  //         minutes-=60
-                  //     }
-                  //     if (minutes>500) {
-                  //       minutes-=20
-                  //     }
-                  //     chres.sunday=this.gethours(minutes)
-
-                  // }else{
-                  //  if (minutes>275) {
-                  //     minutes-=60
-                  // }else{
-                  //   chres.wday= this.gethours(minutes)
-                  // }
-                  // if (minutes>480 && minutes<=500) {
-                  //     chres.wday= this.gethours(480)
-                  //     chres.wwday=0
-                  // }
-                  // else if(minutes>500){
-                  //     chres.wday= this.gethours(480)
-                  //     chres.wwday=this.gethours(minutes-500)
-                  // }
-                  // else{
-                  //   chres.wday= this.gethours(minutes)
-                  // }
-
-                  // }
-
-                  // if (new Date(this.$store.state.data[i][index - 1] +" 08:40:00")>=new Date(arrs[0])) {
-                  //     start=new Date(this.$store.state.data[i][index - 1] +" 08:30:00").getTime()
-                  // }else if( new Date(this.$store.state.data[i][index - 1] +" 08:40:00") <new Date(arrs[0]) && new Date(this.$store.state.data[i][index - 1] +" 08:40:00") >=new Date(arrs[0])){
-                  //      start=new Date(arrs[0]).getTime()
-                  // }
-                  // else{
-                  //     start=new Date(arrs[0]).getTime()
-                  // }
-                  // minutes=parseInt((end-start) / 1000 / 60)
-
-                  // if (this.isoffday(this.$store.state.data[i][index - 1])==6) {
-                  //     if (minutes>275) {
-                  //         minutes-=60
-                  //     }
-                  //     if (minutes>500) {
-                  //       minutes-=20
-                  //     }
-                  //     chres.sday=this.gethours(minutes)
-
-                  // }
-
-                  //  else if (this.isoffday(this.$store.state.data[i][index - 1])==0) {
-                  //     if (minutes>275) {
-                  //         minutes-=60
-                  //     }
-                  //     if (minutes>500) {
-                  //       minutes-=20
-                  //     }
-                  //     chres.sunday=this.gethours(minutes)
-
-                  // }else{
-                  //  if (minutes>275) {
-                  //     minutes-=60
-                  // }else{
-                  //   chres.wday= this.gethours(minutes)
-                  // }
-                  // if (minutes>480 && minutes<=500) {
-                  //     chres.wday= this.gethours(480)
-                  //     chres.wwday=0
-                  // }
-                  // else if(minutes>500){
-                  //     chres.wday= this.gethours(480)
-                  //     chres.wwday=this.gethours(minutes-500)
-                  // }
-                  // else{
-                  //   chres.wday= this.gethours(minutes)
-                  // }
-
-                  // }
                 }
                 break;
             }
           }
           this.data.push(res);
+          console.log(chres)
           this.tempdata.push(chres);
         }
       }
