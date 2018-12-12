@@ -59,10 +59,15 @@ export default {
       }
   },
   mounted(){
+      
       this.data=this.$store.state.datalist
-  }
+     
+  },
+
+ 
 };
 </script>
 
 <style>
+
 </style>

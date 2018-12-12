@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <!-- <div class="layout"> -->
-        <Layout>
-            
+        <Layout >
+            <div class="top-head">
        <Menu mode="horizontal" theme="light" :style="{margin:'40px  20px 0 20px'}">
         
         <MenuItem name="1" @click.native="openfile" v-if="!this.$store.state.data.length">
@@ -14,9 +14,9 @@
             <router-link to="/">关闭文件</router-link>
         </MenuItem>
         </MenuItem>
-          <MenuItem name="3"  @click.native="act=3" v-if="this.$store.state.data.length">
+          <MenuItem name="3"  v-if="this.$store.state.data.length">
             <Icon type="md-list" />
-          <router-link to="/mydata">初始数据</router-link>
+          <router-link to="/mydata" >初始数据</router-link>
           
         </MenuItem>
         </MenuItem>
@@ -69,7 +69,10 @@
             退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出
         </MenuItem>
        </Menu>
-             <router-view></router-view>
+       </div>
+             <router-view class="rot">
+               
+             </router-view>
             
             <Footer class="layout-footer-center">2018-2019 &copy; 中航电测仪器股份有限公司-汉中分公司</Footer>
         </Layout>
@@ -90,6 +93,7 @@ export default {
     return {
        timeup:"",
        timedown:""
+       
     };
   },
   mounted(){
@@ -101,6 +105,25 @@ export default {
         })
   },
   methods:{
+    handleSpinCustom () {
+                this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', '加载中，请稍候')
+                        ])
+                    }
+                });
+                setTimeout(() => {
+                    this.$Spin.hide();
+                }, 3000);
+            },
      about() {
       this.$Modal.info({
         title: "关于本软件",
@@ -118,7 +141,7 @@ export default {
       this.$electron.ipcRenderer.send("min");
     },
     openfile() {
-     
+     this.handleSpinCustom()
       let that = this;
       this.$electron.remote.dialog.showOpenDialog(
         {
@@ -140,13 +163,13 @@ export default {
       let that = this;
       this.$electron.remote.dialog.showSaveDialog(
         {
-          filters: [{ name: "excel", extensions: ["xls", "xlsx"] }]
+          filters: [{ name: "excel", extensions: ["xlsx"] }]
           // properties: ["openFile"]
         },
         function(e) {
           if (e) {
             let data1=[{
-              name:"sheet1",
+              name:that.$store.state.mindate+"至"+ that.$store.state.maxdate,
               data:that.$store.state.exdata
             }]
             
@@ -195,4 +218,14 @@ a {
 .layout-footer-center {
   text-align: center;
 }
+.top-head{
+			position:fixed; width:100%;height:auto; overflow-y:auto;min-height: 60px;line-height: 60px;z-index: 1; background: #f5f7f9;
+		}
+.rot{
+  margin-top: 100px;
+  z-index: 0;
+}
+.demo-spin-icon-load{
+        animation: ani-demo-spin 1s linear infinite;
+    }
 </style>

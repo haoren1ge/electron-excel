@@ -6,7 +6,7 @@
       <font style="font-size:24px;">数据图表</font>
           
       <Card>
-            <div id="myChart" style="width: 100%;height:5000px;"></div>
+            <div id="myChart" style="width: 100%;height:8000px;"></div>
       </Card>
       
    </Content>

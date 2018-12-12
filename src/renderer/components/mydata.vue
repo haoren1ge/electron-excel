@@ -26,6 +26,7 @@ export default {
     };
   },
   methods: {
+    
     checkofdata(start, end, da) {
        let timeup = this.$store.state.timeup + ":00";
       let timedown = this.$store.state.timedown + ":00";
@@ -80,8 +81,7 @@ export default {
              end=new Date(end).getTime();
              res.minutes=parseInt((end - start) / 1000 / 60)
           }else if ( new Date(da + " " + timeup) < new Date(end) && new Date(da + " " + timedown) >= new Date(end)) {
-             end=new Date(da + " " + timeup).getTime();
-             res.minutes=parseInt((end - start) / 1000 / 60)
+             res.minutes=0
           }else if ( new Date(da + " " + timedown) < new Date(end) ) {
             end=new Date(end).getTime();
             res.minutes=parseInt((end - start) / 1000 / 60)
@@ -89,7 +89,7 @@ export default {
       
 
       } else if (
-        new Date(da + " " + timedown) > new Date(start) 
+        new Date(da + " " + timedown) < new Date(start) 
       ) {
             start = new Date(start).getTime();
             end=new Date(end).getTime();
@@ -146,7 +146,7 @@ export default {
       ) {
         
         start = new Date(start).getTime();
-               if ( new Date(da + " " + timeup) >= new Date(end)) {
+          if ( new Date(da + " " + timeup) >= new Date(end)) {
              end=new Date(end).getTime();
              res.minutes=parseInt((end - start) / 1000 / 60)
           }else if ( new Date(da + " " + timeup) < new Date(end) && new Date(da + " " + timedown) >= new Date(end)) {
@@ -173,12 +173,8 @@ export default {
       ) {
         
         start = new Date(da + " " + timedown).getTime();
-              if ( new Date(da + " " + timeup) >= new Date(end)) {
-             end=new Date(end).getTime();
-             res.minutes=parseInt((end - start) / 1000 / 60)
-          }else if ( new Date(da + " " + timeup) < new Date(end) && new Date(da + " " + timedown) >= new Date(end)) {
-            end=new Date(da + " " + timeup).getTime();
-            res. minutes=parseInt((end - start) / 1000 / 60)
+          if ( new Date(da + " " + timeup) < new Date(end) && new Date(da + " " + timedown) >= new Date(end)) {
+            res. minutes=0
           }else if ( new Date(da + " " + timedown) < new Date(end) && new Date(da + " " + nw1) >= new Date(end)) {
             end=new Date(end).getTime();
             res.minutes=parseInt((end - start) / 1000 / 60)
@@ -195,17 +191,11 @@ export default {
       
 
       } else if (
-        new Date(da + " " + timedown) > new Date(start) &&
-        new Date(da + " " + nw1) <= new Date(start)
+        new Date(da + " " + timedown) < new Date(start) &&
+        new Date(da + " " + nw1) >= new Date(start)
       ) {
         start = new Date(start).getTime();
-              if ( new Date(da + " " + timeup) >= new Date(end)) {
-             end=new Date(end).getTime();
-            res. minutes=parseInt((end - start) / 1000 / 60)
-          }else if ( new Date(da + " " + timeup) < new Date(end) && new Date(da + " " + timedown) >= new Date(end)) {
-            end=new Date(da + " " + timeup).getTime();
-             res.minutes=parseInt((end - start) / 1000 / 60)
-          }else if ( new Date(da + " " + timedown) < new Date(end) && new Date(da + " " + nw1) >= new Date(end)) {
+           if ( new Date(da + " " + timedown) < new Date(end) && new Date(da + " " + nw1) >= new Date(end)) {
             end=new Date(end).getTime();
             res.minutes=parseInt((end - start) / 1000 / 60)
           }else if ( new Date(da + " " + nw1) < new Date(end) && new Date(da + " " + nw2) >= new Date(end)) {
@@ -221,26 +211,24 @@ export default {
 
 
       } else if (
-        new Date(da + " " + nw1) > new Date(start) &&
-        new Date(da + " " + nw2) <= new Date(start)
+        new Date(da + " " + nw1) < new Date(start) &&
+        new Date(da + " " + nw2) >= new Date(start)
       ) {
         start = new Date(da + " " + nw1).getTime();
          if ( new Date(da + " " + nw1) < new Date(end) && new Date(da + " " + nw2) >= new Date(end)) {
             end=new Date(da + " " + nw1).getTime();
             res.minutes=parseInt((end - start) / 1000 / 60)
           }else if ( new Date(da + " " + nw2) < new Date(end) ) {
-           end1=new Date(da + " " + nw1).getTime();
             end2=new Date(da + " " + nw2).getTime();
             end3=new Date(end).getTime();
-            res.minutes=parseInt((end1 - start) / 1000 / 60)
             res.awork=parseInt((end3 - end2) / 1000 / 60)
           }
 
 
-       } else if (new Date(da + " " + nw2) > new Date(start)) {
+       } else if (new Date(da + " " + nw2) < new Date(start)) {
          start = new Date(start).getTime();
          end=new Date(end).getTime();
-         res.awork=parseInt((end3 - end2) / 1000 / 60)
+         res.awork=parseInt((end - start) / 1000 / 60)
       }
       if (res.minutes<0) {
            res.minutes=0        
@@ -356,7 +344,6 @@ export default {
             }
           }
           this.data.push(res);
-          console.log(chres)
           this.tempdata.push(chres);
         }
       }
